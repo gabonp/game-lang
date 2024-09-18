@@ -1,5 +1,3 @@
-using System.ComponentModel;
-
 public class Error
 {
     public bool hadError = false;
