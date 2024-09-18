@@ -11,6 +11,10 @@ public class GameLang
         error.addCode(code);
         
         List<Token> tokens = scan(code); // tokenize the code;
+
+        if(error.hadError) return;
+
+        Expr expr = parse(tokens);
     }
 
     private List<string> readFile(string path)
@@ -39,5 +43,12 @@ public class GameLang
         scanner.scanTokens(ref error);
 
         return scanner.getTokens();
+    }
+
+    private Expr parse(List<Token> tokens)
+    {
+        Parser parser = new Parser(tokens);
+
+        return parser.parse();
     }
 }

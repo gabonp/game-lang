@@ -11,7 +11,7 @@ public enum TokenType
     IDENTIFIER, STRING, NUMBER,
 
     // keywords
-    FALSE, TRUE,
+    FALSE, INT, TRUE,
 
     EOF
 }
