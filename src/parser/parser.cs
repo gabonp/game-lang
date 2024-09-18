@@ -21,7 +21,7 @@ public class Parser
         }
         catch
         {
-            System.Console.WriteLine("ggfgfdhfhghghg");
+            System.Console.WriteLine("error");
             return null!;
         }
     }
@@ -31,7 +31,23 @@ public class Parser
     // private
     private Expr parseExpression()
     {
-        return parseTerm();
+        return parseRelation();
+    }
+
+    private Expr parseRelation()
+    {
+        Expr term = parseTerm();
+
+        while(check(LESS, LESS_EQUAL))
+        {
+            Token oper = currToken;
+            advance();
+
+            Expr term_ = parseTerm();
+            term = new exprBinary(term, oper, term_);
+        }
+
+        return term;
     }
 
     private Expr parseTerm()
@@ -104,6 +120,20 @@ public class Parser
             advance();
             Expr expr = parseExpression();
 
+            if( check(MARK) )
+            {
+                advance();
+                Expr mainBranch = parseExpression();
+
+                lookfor(COLON, "Expected ':' after expression in conditional operator.");
+
+                Expr elseBranch = parseExpression();
+
+                lookfor(RIGHT_PAREN, "Expected ')' after expression.");
+
+                return new exprTernary(expr, mainBranch, elseBranch);
+            }
+
             lookfor(RIGHT_PAREN, "Expected ')' after expression.");
 
             return new exprGroup(expr);
@@ -156,6 +186,7 @@ public class Parser
         }
 
         // [TODO] report an error.
+        System.Console.WriteLine(message);
         throw new Exception();
     }
 }

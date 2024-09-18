@@ -9,6 +9,7 @@ public interface ExprVisitor
     public object visitCast(exprCast expr);
     public object visitGroup(exprGroup expr);
     public object visitLiteral(exprLiteral expr);
+    public object visitTernary(exprTernary expr);
     public object visitUnary(exprUnary expr);
 }
 
@@ -75,6 +76,25 @@ public class exprLiteral : Expr
     public object accept(ExprVisitor visitor)
     {
         return visitor.visitLiteral(this);
+    }
+}
+
+public class exprTernary : Expr
+{
+    public Expr condition;
+    public Expr mainBranch;
+    public Expr elseBranch;
+
+    public exprTernary(Expr condition, Expr mainBranch, Expr elseBranch)
+    {
+        this.condition = condition;
+        this.mainBranch = mainBranch;
+        this.elseBranch = elseBranch;
+    }
+
+    public object accept(ExprVisitor visitor)
+    {
+        return visitor.visitTernary(this);
     }
 }
 

@@ -131,6 +131,14 @@ public class Scanner
                 addToken(RIGHT_PAREN, ")");
                 return;
 
+            case ':': // colon
+                addToken(COLON, ":");
+                return;
+
+            case '?': // mark
+                addToken(MARK, "?");
+                return;
+
             case '-': // minus
                 addToken(MINUS, "-");
                 return;

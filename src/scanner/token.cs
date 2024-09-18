@@ -2,7 +2,7 @@ public enum TokenType
 {
     // single-character tokens
     LEFT_PAREN, RIGHT_PAREN,
-    MINUS, PLUS,
+    COLON, MARK, MINUS, PLUS,
 
     // one or two character tokens
     LESS, LESS_EQUAL,
