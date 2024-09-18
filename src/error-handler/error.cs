@@ -24,6 +24,8 @@ public class Error
         for(int i = 0; i < code_.Length; i++)
             where += ( i == column ? "^" : "." );
 
-        // [TODO] report the error
+        System.Console.WriteLine(">> Error in line " + (line + 1) + ": " + message);
+        System.Console.WriteLine("         " + code_);
+        System.Console.WriteLine("         " + where);
     }
 }

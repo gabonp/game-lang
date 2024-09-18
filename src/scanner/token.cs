@@ -2,10 +2,10 @@ public enum TokenType
 {
     // single-character tokens
     LEFT_PAREN, RIGHT_PAREN,
-    PLUS,
+    MINUS, PLUS,
 
     // one or two character tokens
-    GREATER, GREATER_EQUAL,
+    LESS, LESS_EQUAL,
 
     // literals
     IDENTIFIER, STRING, NUMBER,
@@ -32,5 +32,10 @@ public class Token
 
         this.line = line;
         this.column = column;
+    }
+
+    public override string ToString()
+    {
+        return type + " '" + lexeme + "' " + (literal == null ? "" : literal.ToString()) + " in " + line.ToString() + ", " + column.ToString();
     }
 }
