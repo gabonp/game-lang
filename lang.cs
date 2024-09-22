@@ -4,17 +4,20 @@ using System.IO;
 public class GameLang
 {
     private Error error = new Error();
+    private RuntimeError runtimeError = new RuntimeError();
+    private Expr? expr;
 
     public void init(string path)
     {
         List<string> code = readFile(path); // read the source code and store it
-        error.addCode(code);
+        error = new Error(code);
+        runtimeError = new RuntimeError(code);
         
         List<Token> tokens = scan(code); // tokenize the code;
 
         if(error.hadError) return;
 
-        Expr expr = parse(tokens);
+        expr = parse(tokens);
     }
 
     private List<string> readFile(string path)

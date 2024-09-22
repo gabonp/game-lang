@@ -5,7 +5,7 @@ public class Error
     private List<string> code = new List<string>();
 
     public Error() {}
-    public void addCode(List<string> code)
+    public Error(List<string> code)
     {
         this.code = code;
     }
