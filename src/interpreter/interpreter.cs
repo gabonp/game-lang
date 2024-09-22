@@ -1,24 +1,35 @@
-using System.Runtime.InteropServices;
 using static TokenType;
 
-public class Interpreter : ExprVisitor
+public class Interpreter : ExprVisitor, StmtVisitor
 {
     RuntimeError error = new RuntimeError();
 
-    public void interpret(Expr expr, ref RuntimeError error)
+    public void interpret(Stmt stmt, ref RuntimeError error)
     {
         this.error = error;
 
         try
         {
-            object value = evaluateExpr(expr);
-            System.Console.WriteLine(value);
+            executeStmt(stmt);
 
             error = this.error; // update Lang's error handler in case errors occurred
         }
         catch {}
     }
 
+    // StmtVisitor
+    public void visitExpr(stmtExpr stmt)
+    {
+        evaluateExpr(stmt.expr);
+    }
+
+    public void visitPrint(stmtPrint stmt)
+    {
+        object value = evaluateExpr(stmt.expr);
+        System.Console.WriteLine( stringify(value) );
+    }
+
+    // ExprVisitor
     public object visitBinary(exprBinary expr)
     {
         object left = evaluateExpr(expr.left);
@@ -93,6 +104,11 @@ public class Interpreter : ExprVisitor
         return expr.accept(this);
     }
 
+    private void executeStmt(Stmt stmt)
+    {
+        stmt.accept(this);
+    }
+
     // private tools
     private object arithmetic(object left, Token oper, object right)
     {
@@ -150,5 +166,13 @@ public class Interpreter : ExprVisitor
             }
 
         return (long) value;
+    }
+
+    private string stringify(object value)
+    {
+        if(value is bool)
+            return (bool) value ? "true" : "false";
+
+        return value.ToString()!;
     }
 }

@@ -10,12 +10,12 @@ public class Parser
         this.tokens = tokens;
     }
 
-    public Expr parse()
+    public Stmt parse()
     {
         try
         {
             if(!isAtEnd)
-                return parseExpression();
+                return parseStatement();
             else
                 return null!;
         }
@@ -29,6 +29,32 @@ public class Parser
     private int curr = 0;
 
     // private
+    private Stmt parseStatement()
+    {
+        if(check(PRINT))
+        {
+            advance();
+            return parsePrint();
+        }
+
+        return parseExprStmt();
+    }
+
+    private Stmt parsePrint()
+    {
+        Expr value = parseExpression();
+        lookfor(SEMICOLON, "Expected ';' after print statement.");
+        return new stmtPrint(value);
+    }
+
+    private Stmt parseExprStmt()
+    {
+        Expr expr = parseExpression();
+        lookfor(SEMICOLON, "Expected ';' after expression statement.");
+
+        return new stmtExpr(expr);
+    }
+
     private Expr parseExpression()
     {
         return parseRelation();

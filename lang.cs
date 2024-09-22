@@ -6,7 +6,7 @@ public class GameLang
     private Error error = new Error();
     private RuntimeError runtimeError = new RuntimeError();
     private Interpreter interpreter = new Interpreter();
-    private Expr? expr;
+    private Stmt? stmt;
 
     public void init(string path)
     {
@@ -18,13 +18,13 @@ public class GameLang
 
         if(error.hadError) return;
 
-        expr = parse(tokens);
+        stmt = parse(tokens);
     }
 
     public void interpret()
     {
-        if(expr != null)
-            interpreter.interpret(expr, ref runtimeError);
+        if(stmt != null)
+            interpreter.interpret(stmt, ref runtimeError);
     }
 
     private List<string> readFile(string path)
@@ -55,7 +55,7 @@ public class GameLang
         return scanner.getTokens();
     }
 
-    private Expr parse(List<Token> tokens)
+    private Stmt parse(List<Token> tokens)
     {
         Parser parser = new Parser(tokens);
 
