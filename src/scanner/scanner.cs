@@ -147,6 +147,10 @@ public class Scanner
                 addToken(PLUS, "+");
                 return;
 
+            case ';': // semicolon
+                addToken(SEMICOLON, ";");
+                return;
+
             // one or two character tokens
             case '<': // less, less or equal
                 if(currChar == '=')
@@ -183,6 +187,10 @@ public class Scanner
 
             case "int":
                 addToken(INT, s);
+                return true;
+
+            case "print":
+                addToken(PRINT, s);
                 return true;
 
             case "true":

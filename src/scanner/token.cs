@@ -2,7 +2,7 @@ public enum TokenType
 {
     // single-character tokens
     LEFT_PAREN, RIGHT_PAREN,
-    COLON, MARK, MINUS, PLUS,
+    COLON, MARK, MINUS, PLUS, SEMICOLON,
 
     // one or two character tokens
     LESS, LESS_EQUAL,
@@ -11,7 +11,7 @@ public enum TokenType
     IDENTIFIER, STRING, NUMBER,
 
     // keywords
-    FALSE, INT, TRUE,
+    FALSE, INT, PRINT, TRUE,
 
     EOF
 }
