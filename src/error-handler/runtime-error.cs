@@ -5,7 +5,7 @@ public class RuntimeError : Error
 
     public void error(Token token, string errorMessage)
     {
-        error(token.line, token.column, errorMessage);
+        error(token, errorMessage);
         throw new Exception();
     }
 }

@@ -23,7 +23,7 @@ public class Scanner
             colStart = colEnd;
         }
 
-        tokens.Add( new Token(EOF, "", null, line, colStart));
+        tokens.Add( new Token(EOF, "", null, line, colStart, colStart));
     }
 
     public List<Token> getTokens()
@@ -231,7 +231,7 @@ public class Scanner
 
     private void addToken(TokenType type, string lexeme, object? literal)
     {
-        tokens.Add( new Token(type, lexeme, literal, line, colStart) );
+        tokens.Add( new Token(type, lexeme, literal, line, colStart, colEnd - 1) );
     }
 
     private void addToken(TokenType type, string lexeme)

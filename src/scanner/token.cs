@@ -22,20 +22,21 @@ public class Token
     public string lexeme;
     public object? literal;
 
-    public int line, column;
+    public int line, start, end;
 
-    public Token(TokenType type, string lexeme, object? literal, int line, int column)
+    public Token(TokenType type, string lexeme, object? literal, int line, int start, int end)
     {
         this.type = type;
         this.lexeme = lexeme;
         this.literal = literal;
 
         this.line = line;
-        this.column = column;
+        this.start = start;
+        this.end = end;
     }
 
     public override string ToString()
     {
-        return type + " '" + lexeme + "' " + (literal == null ? "" : literal.ToString()) + " in " + line.ToString() + ", " + column.ToString();
+        return type + " '" + lexeme + "' " + (literal == null ? "" : literal.ToString()) + " in " + line.ToString() + ", " + start.ToString();
     }
 }

@@ -3,6 +3,7 @@ using static TokenType;
 
 public class Parser
 {
+    private Error error = new Error();
     private List<Token> tokens;
 
     public Parser(List<Token> tokens)
@@ -10,18 +11,25 @@ public class Parser
         this.tokens = tokens;
     }
 
-    public Stmt parse()
+    public Stmt parse(ref Error error)
     {
+        this.error = error;
+
         try
         {
             if(!isAtEnd)
-                return parseStatement();
+            {
+                Stmt stmt = parseStatement();
+                error = this.error;
+
+                return stmt;
+            }
             else
                 return null!;
+
         }
         catch
         {
-            System.Console.WriteLine("error");
             return null!;
         }
     }
@@ -166,6 +174,13 @@ public class Parser
         }
 
         // [TODO] report an error. "Expected expression".
+        if(isAtEnd)
+        {
+            Token prevToken = tokens[curr - 1];
+            error.error(prevToken.line, prevToken.end, "Expected expression.");
+        }
+        else
+            error.error(currToken.line, currToken.start, "Expected expression.");
         throw new Exception();
     }
 
@@ -210,9 +225,14 @@ public class Parser
             advance();
             return;
         }
-
-        // [TODO] report an error.
-        System.Console.WriteLine(message);
+        if(isAtEnd)
+        {
+            Token prevToken = tokens[curr - 1];
+            error.error(prevToken.line, prevToken.end, message);
+        }
+        else
+            error.error(currToken.line, currToken.start, message);
+        
         throw new Exception();
     }
 }

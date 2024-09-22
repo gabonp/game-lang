@@ -59,6 +59,6 @@ public class GameLang
     {
         Parser parser = new Parser(tokens);
 
-        return parser.parse();
+        return parser.parse(ref error);
     }
 }
