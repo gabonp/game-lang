@@ -5,6 +5,7 @@ public class GameLang
 {
     private Error error = new Error();
     private RuntimeError runtimeError = new RuntimeError();
+    private Interpreter interpreter = new Interpreter();
     private Expr? expr;
 
     public void init(string path)
@@ -18,6 +19,12 @@ public class GameLang
         if(error.hadError) return;
 
         expr = parse(tokens);
+    }
+
+    public void interpret()
+    {
+        if(expr != null)
+            interpreter.interpret(expr, ref runtimeError);
     }
 
     private List<string> readFile(string path)
