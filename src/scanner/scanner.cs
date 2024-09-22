@@ -181,6 +181,10 @@ public class Scanner
                 addToken(FALSE, s, false);
                 return true;
 
+            case "int":
+                addToken(INT, s);
+                return true;
+
             case "true":
                 addToken(TRUE, s, true);
                 return true;

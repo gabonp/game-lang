@@ -129,7 +129,7 @@ public class Parser
 
                 Expr elseBranch = parseExpression();
 
-                lookfor(RIGHT_PAREN, "Expected ')' after expression.");
+                lookfor(RIGHT_PAREN, "Expected ')' after expression");
 
                 return new exprTernary(expr, mainBranch, elseBranch);
             }
